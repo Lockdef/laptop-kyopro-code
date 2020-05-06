@@ -1,13 +1,7 @@
 n = int(input())
-
-
-def dfs(s):
-    if int(s) > n:
-        return 0
-    ret = 1 if all(s.count(c) > 0 for c in '753') else 0
-    for c in '753':
-        ret += dfs(s + c)
-    return ret
-
-
-print(dfs('0'))
+c = 0
+for i in range(1, n+1, 2):
+    i = set(str(i))
+    if len(i) == 3 and '3' in i and '5' in i and '7' in i:
+        c += 1
+print(c)
