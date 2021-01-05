@@ -1,56 +1,38 @@
-class UnionFind():
-    def __init__(self, n):
-        self.n = n
-        self.parents = [-1] * n
+n, m = map(int, input().split())
+node = [[False for _ in range(n)] for _ in range(n)]
+edge = [[False for _ in range(n)] for _ in range(n)]
+visited = [False for _ in range(n)]
+ans = 0
+for _ in range(m):
+    u, v = map(lambda x: int(x) - 1, input().split())
+    node[u][v] = True
+    node[v][u] = True
+    edge[u][v] = False
+    edge[v][u] = False
 
-    def find(self, x):
-        if self.parents[x] < 0:
-            return x
-        else:
-            self.parents[x] = self.find(self.parents[x])
-            return self.parents[x]
 
-    def union(self, x, y):
-        x = self.find(x)
-        y = self.find(y)
+def dfs(u):
+    is_cycle = False
 
-        if x == y:
-            return
+    visited[u] = True
 
-        if self.parents[x] > self.parents[y]:
-            x, y = y, x
+    for v in range(n):
+        if not node[u][v]:
+            continue
+        if visited[v] and not edge[u][v]:
+            is_cycle = True
+            continue
+        if not visited[v]:
+            edge[u][v] = True
+            edge[v][u] = True
+            is_cycle |= dfs(v)
 
-        self.parents[x] += self.parents[y]
-        self.parents[y] = x
+    return is_cycle
 
-    def size(self, x):
-        return -self.parents[self.find(x)]
 
-    def same(self, x, y):
-        return self.find(x) == self.find(y)
+for i in range(n):
+    if not visited[i]:
+        if not dfs(i):
+            ans += 1
 
-    def members(self, x):
-        root = self.find(x)
-        return [i for i in range(self.n) if self.find(i) == root]
-
-    def roots(self):
-        return [i for i, x in enumerate(self.parents) if x < 0]
-
-    def group_count(self):
-        return len(self.roots())
-
-    def all_group_members(self):
-        return {r: self.members(r) for r in self.roots()}
-
-    def __str__(self):
-        return '\n'.join('{}: {}'.format(r, self.members(r)) for r in self.roots())
-
-N, M = map(int, input().split())
-uv = [list(map(int,input().split())) for _ in range(M)]
-
-uf = UnionFind(N)
-
-for u, v = uv:
-    uf.union(u, v)
-
-for i in 
+print(ans)
