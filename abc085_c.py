@@ -1,8 +1,11 @@
 n, y = map(int, input().split())
 
-c = y // 10000 + (y % 10000) // 5000 + (y % 5000) // 1000
+for i in range(n + 1):
+    for j in range(n + 1 - i):
+        k = n - i - j
+        money = i * 10000 + j * 5000 + k * 1000
+        if money == y:
+            print(i, j, k)
+            exit()
 
-if c <= n:
-    print(y // 10000, (y % 10000) // 5000, (y % 5000) // 1000)
-else:
-    print(-1, -1, -1)
+print("-1 -1 -1")

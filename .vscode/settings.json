@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "iostream": "cpp",
-        "ostream": "cpp",
-        "algorithm": "c",
-        "typeindex": "c",
-        "typeinfo": "c"
-    }
-}
