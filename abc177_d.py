@@ -1,5 +1,4 @@
 from collections import defaultdict
-from typing import Union
 
 
 class UnionFind():
@@ -32,6 +31,7 @@ class UnionFind():
         for member in range(self.n):
             group_members[self.find(member)].append(member)
         return group_members
+
 
 n, m = map(int, input().split())
 uf = UnionFind(n)
